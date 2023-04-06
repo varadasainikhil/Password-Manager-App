@@ -83,7 +83,7 @@ email_label.grid(row=2, column=0)
 # Creating an entry for the user to enter the email address
 email_entry = Entry(width=52)
 email_entry.grid(row=2, column=1, columnspan=2)
-email_entry.insert(0, "varadasainikhil@gmail.com")
+email_entry.insert(0, "johndoe@gmail.com")
 
 # Creating a label for the password
 password_label = Label(text="Password", font=(FONT_NAME, 12, "bold"))
