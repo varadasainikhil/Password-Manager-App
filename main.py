@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 FONT_NAME = "Courier"
 
@@ -40,19 +41,28 @@ def save_password():
     website_text = website_entry.get()
     email_text = email_entry.get()
     password_text = password_entry.get()
+    new_data = {website_text: {
+        "email": email_text,
+        "password": password_text
+    }}
 
     if len(website_text) == 0 or len(password_text) == 0 or len(email_text) == 0:
         messagebox.showinfo(title="Error", message="Please fill out all the fields.")
     else:
-        is_ok_to_save = messagebox.askokcancel(title="Confirm?",
-                                               message=f"The details entered as :\n Website : {website_text} \n "
-                                                       f"Email : {email_text} \n Password : {password_text}")
-        if is_ok_to_save:
-            with open(file="passwords.txt", mode="a") as file:
-                file.write(f"{website_text} | {email_text} | {password_text} \n")
-            pyperclip.copy(password_text)
-            website_entry.delete(0, END)
-            password_entry.delete(0, END)
+        try:
+            with open(file="data.json", mode="r") as file:
+                data = json.load(file)
+                data.update(new_data)
+        except FileNotFoundError:
+            with open(file="data.json", mode="w") as file:
+                json.dump(new_data, file, indent=4)
+        else:
+            with open(file="data.json", mode="w") as file:
+                json.dump(data, file, indent=4)
+
+        pyperclip.copy(password_text)
+        website_entry.delete(0, END)
+        password_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
