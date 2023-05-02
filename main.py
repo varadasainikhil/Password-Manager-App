@@ -5,9 +5,10 @@ import pyperclip
 
 FONT_NAME = "Courier"
 
-
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 # Function to generate a password
+
+
 def generate_password():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                'v',
@@ -21,9 +22,9 @@ def generate_password():
     nr_symbols = random.randint(2, 4)
     nr_numbers = random.randint(2, 4)
 
-    password_list = [random.choice(letters) for char in range(nr_letters)]
-    password_list += [random.choice(symbols) for char in range(nr_symbols)]
-    password_list += [random.choice(numbers) for char in range(nr_numbers)]
+    password_list = [random.choice(letters) for _ in range(nr_letters)]
+    password_list += [random.choice(symbols) for _ in range(nr_symbols)]
+    password_list += [random.choice(numbers) for _ in range(nr_numbers)]
 
     random.shuffle(password_list)
 
