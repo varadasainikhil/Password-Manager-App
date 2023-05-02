@@ -6,10 +6,27 @@ import json
 
 FONT_NAME = "Courier"
 
+
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+def search_password():
+    website_name = website_entry.get().lower()
+    try:
+        with open(file="data.json", mode="r") as file:
+            website_data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="There are no saved passwords.")
+    else:
+        if website_name in website_data:
+            password = website_data[website_name]["password"]
+            messagebox.showinfo(title="Password",
+                                message=f"The password for {website_name} is {password}. Your password "
+                                        f"is copied to the clipboard")
+            pyperclip.copy(password)
+        else:
+            messagebox.showinfo(title="Error", message="Website not found. Please check the spelling.")
+
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
-# Function to generate a password
-
-
 def generate_password():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                'v',
@@ -83,9 +100,13 @@ website_label = Label(text="Website", font=(FONT_NAME, 12, "bold"))
 website_label.grid(row=1, column=0)
 
 # Creating an entry for the user to enter the website address
-website_entry = Entry(width=52)
-website_entry.grid(row=1, column=1, columnspan=2)
+website_entry = Entry(width=34)
+website_entry.grid(row=1, column=1)
 website_entry.focus()
+
+# Creating a Button to search the password
+search_password_button = Button(text="Search", width=14, padx=0, pady=0, command=search_password)
+search_password_button.grid(row=1, column=2)
 
 # Creating a label for the Email
 email_label = Label(text="Email/Username", font=(FONT_NAME, 12, "bold"))
@@ -107,7 +128,6 @@ password_entry.grid(row=3, column=1)
 # Creating a Button to generate Password
 generate_password_button = Button(text="Generate Password", width=14, padx=0, pady=0, command=generate_password)
 generate_password_button.grid(row=3, column=2)
-
 
 add_button = Button(text="Add", width=44, command=save_password)
 add_button.grid(row=4, column=1, columnspan=2)
